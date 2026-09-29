@@ -1,24 +1,13 @@
 class Main {
     public static void main(String[] args) {
-        LinkedList myLinkedList = new LinkedList(13);
-        myLinkedList.append(69);
-        myLinkedList.append(67);
+        Book buku1 = new Book("Bumi Manusia", "Pramoedya Ananta Toer");
+        Book buku2 = new Book("Laskar Pelangi", "Andrea Hirata");
         
-        System.out.println("Isi Linked List awal:");
-        myLinkedList.printList();
+        ListADT<Book> bookList = new LinkedList<>(buku1);
+        bookList.append(buku2);
+        System.out.println(bookList.get(1).judul);
         
-        System.out.println("\nMenambahkan 10 di awal (prepend):");
-        myLinkedList.prepend(10);
-        myLinkedList.printList();
-        
-        System.out.println("\nMenyisipkan 99 pada index 2:");
-        myLinkedList.insert(2, 99);
-        myLinkedList.printList();
-        
-        System.out.println("\nMenghapus elemen terakhir:");
-        myLinkedList.removeLast();
-        myLinkedList.printList();
-        
-        System.out.println("\nPanjang Linked List sekarang: " + myLinkedList.getLength());
+        bookList.printList();
     }
 }
+

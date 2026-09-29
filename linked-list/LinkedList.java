@@ -1,6 +1,6 @@
-class LinkedList {
-    private Node head;
-    private Node tail;
+class LinkedList<T> implements ListADT<T> {
+    private Node<T> head;
+    private Node<T> tail;
     private int length;
 
     public LinkedList() {
@@ -9,15 +9,15 @@ class LinkedList {
         this.length = 0;
     }
 
-    public LinkedList(int value) {
-        Node newNode = new Node(value);
+    public LinkedList(T value) {
+        Node<T> newNode = new Node<T>(value);
         this.head = newNode;
         this.tail = newNode;
         this.length = 1;
     }
 
-    public void append(int value) {
-        Node newNode = new Node(value);
+    public void append(T value) {
+        Node<T> newNode = new Node<T>(value);
         if (length == 0) {
             head = newNode;
             tail = newNode;
@@ -28,10 +28,10 @@ class LinkedList {
         length++;
     }
 
-    public Node removeLast() {
+    public T removeLast() {
         if (length == 0) return null;
-        Node temp = head;
-        Node pre = head;
+        Node<T> temp = head;
+        Node<T> pre = head;
         while (temp.getNext() != null) {
             pre = temp;
             temp = temp.getNext();
@@ -43,11 +43,11 @@ class LinkedList {
             head = null;
             tail = null;
         }
-        return temp;
+        return temp.getValue();
     }
 
-    public void prepend(int value) {
-        Node newNode = new Node(value);
+    public void prepend(T value) {
+        Node<T> newNode = new Node<T>(value);
         if (length == 0) {
             head = newNode;
             tail = newNode;
@@ -58,29 +58,34 @@ class LinkedList {
         length++;
     }
 
-    public Node removeFirst() {
+    public T removeFirst() {
         if (length == 0) return null;
-        Node temp = head;
+        Node<T> temp = head;
         head = head.getNext();
         temp.setNext(null);
         length--;
         if (length == 0) {
             tail = null;
         }
-        return temp;
+        return temp.getValue();
     }
 
-    public Node get(int index) {
+    private Node<T> getNode(int index) {
         if (index < 0 || index >= length) return null;
-        Node temp = head;
+        Node<T> temp = head;
         for (int i = 0; i < index; i++) {
             temp = temp.getNext();
         }
         return temp;
     }
 
-    public boolean set(int index, int value) {
-        Node temp = get(index);
+    public T get(int index) {
+        Node<T> temp = getNode(index);
+        return temp != null ? temp.getValue() : null;
+    }
+
+    public boolean set(int index, T value) {
+        Node<T> temp = getNode(index);
         if (temp != null) {
             temp.setValue(value);
             return true;
@@ -88,7 +93,7 @@ class LinkedList {
         return false;
     }
 
-    public boolean insert(int index, int value) {
+    public boolean insert(int index, T value) {
         if (index < 0 || index > length) return false;
         if (index == 0) {
             prepend(value);
@@ -98,34 +103,35 @@ class LinkedList {
             append(value);
             return true;
         }
-        Node newNode = new Node(value);
-        Node temp = get(index - 1);
+        Node<T> newNode = new Node<T>(value);
+        Node<T> temp = getNode(index - 1);
         newNode.setNext(temp.getNext());
         temp.setNext(newNode);
         length++;
         return true;
     }
 
-    public Node remove(int index) {
+    public T remove(int index) {
         if (index < 0 || index >= length) return null;
         if (index == 0) return removeFirst();
         if (index == length - 1) return removeLast();
 
-        Node prev = get(index - 1);
-        Node temp = prev.getNext();
+        Node<T> prev = getNode(index - 1);
+        Node<T> temp = prev.getNext();
 
         prev.setNext(temp.getNext());
         temp.setNext(null);
         length--;
-        return temp;
+        return temp.getValue();
     }
 
     public void printList() {
-        Node temp = head;
+        Node<T> temp = head;
         while (temp != null) {
-            System.out.println(temp.getValue());
+            System.out.print(temp.getValue() + (temp != tail ? " -> " : ""));
             temp = temp.getNext();
         }
+        System.out.println();
     }
 
     public int getLength() {

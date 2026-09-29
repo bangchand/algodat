@@ -1,24 +1,24 @@
-class Node {
-    private int value;
-    private Node next;
+class Node<T> {
+    private T value;
+    private Node<T> next;
 
-    Node(int value) {
+    Node(T value) {
         this.value = value;
     }
 
-    void setNext(Node node) {
+    void setNext(Node<T> node) {
         this.next = node;
     }
 
-    Node getNext() {
+    Node<T> getNext() {
         return this.next;
     }
 
-    int getValue() {
+    T getValue() {
         return this.value;
     }
 
-    void setValue(int value) {
+    void setValue(T value) {
         this.value = value;
     }
 }
