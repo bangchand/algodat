@@ -1,5 +1,4 @@
-package stack;
-
+// ADT Stack
 public interface Stack {
     void push(Object value);
     Object pop();

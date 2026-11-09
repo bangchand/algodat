@@ -1,9 +1,6 @@
-package stack;
-
-public class Main {
+public class StackMain {
     public static void main(String[] args) {
-        // 1. Tes ADT Stack biasa
-        System.out.println("--- Tes Stack ---");
+        System.out.println("--- Tes Stack (Menggunakan SinglyLinkedList) ---");
         LinkedStack s = new LinkedStack();
         s.push("A");
         s.push("B");
@@ -14,7 +11,6 @@ public class Main {
         System.out.println("Pop : " + s.pop());
         s.printStack();
 
-        // 2. Tes Infix to Postfix
         System.out.println("\n--- Tes Infix to Postfix ---");
         String[] rumus = {
             "A + B * C",

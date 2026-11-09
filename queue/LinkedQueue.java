@@ -1,27 +1,17 @@
-package queue;
-
+/**
+ * Queue implementation yang memanfaatkan SinglyLinkedList dari folder linked-list
+ */
 public class LinkedQueue implements Queue {
-    private Node front;
-    private Node rear;
-    private int size;
+    private SinglyLinkedList list;
 
     public LinkedQueue() {
-        front = null;
-        rear = null;
-        size = 0;
+        this.list = new SinglyLinkedList();
     }
 
     @Override
     public void enqueue(Object value) {
-        Node newNode = new Node(value);
-        if (isEmpty()) {
-            front = newNode;
-            rear = newNode;
-        } else {
-            rear.next = newNode;
-            rear = newNode;
-        }
-        size++;
+        // Enqueue: masukkan di belakang (tail) O(1)
+        list.append(value);
     }
 
     @Override
@@ -30,14 +20,9 @@ public class LinkedQueue implements Queue {
             System.out.println("Queue kosong!");
             return null;
         }
-        Object item = front.data;
-        front = front.next;
-        size--;
-
-        if (front == null) {
-            rear = null; // jika queue jadi kosong
-        }
-        return item;
+        // Dequeue: ambil dari paling depan (head) O(1)
+        Node removed = list.removeFirst();
+        return removed != null ? removed.getValue() : null;
     }
 
     @Override
@@ -45,27 +30,22 @@ public class LinkedQueue implements Queue {
         if (isEmpty()) {
             return null;
         }
-        return front.data;
+        Node frontNode = list.getHead();
+        return frontNode != null ? frontNode.getValue() : null;
     }
 
     @Override
     public boolean isEmpty() {
-        return front == null;
+        return list.isEmpty();
     }
 
     @Override
     public int size() {
-        return size;
+        return list.getLength();
     }
 
     public void printQueue() {
-        Node current = front;
         System.out.print("Antrian (front -> rear): ");
-        while (current != null) {
-            System.out.print(current.data + " ");
-            current = current.next;
-        }
-        System.out.println();
+        list.printList();
     }
 }
-

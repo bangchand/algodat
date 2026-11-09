@@ -1,20 +1,17 @@
-package stack;
-
+/**
+ * Stack implementation yang memanfaatkan SinglyLinkedList dari folder linked-list
+ */
 public class LinkedStack implements Stack {
-    private Node top;
-    private int size;
+    private SinglyLinkedList list;
 
     public LinkedStack() {
-        top = null;
-        size = 0;
+        this.list = new SinglyLinkedList();
     }
 
     @Override
     public void push(Object value) {
-        Node newNode = new Node(value);
-        newNode.next = top;
-        top = newNode;
-        size++;
+        // Push menambahkan elemen di paling depan (prepend) O(1)
+        list.prepend(value);
     }
 
     @Override
@@ -23,10 +20,9 @@ public class LinkedStack implements Stack {
             System.out.println("Stack kosong!");
             return null;
         }
-        Object item = top.data;
-        top = top.next;
-        size--;
-        return item;
+        // Pop mengambil elemen paling depan (removeFirst) O(1)
+        Node removed = list.removeFirst();
+        return removed != null ? removed.getValue() : null;
     }
 
     @Override
@@ -34,26 +30,22 @@ public class LinkedStack implements Stack {
         if (isEmpty()) {
             return null;
         }
-        return top.data;
+        Node topNode = list.getHead();
+        return topNode != null ? topNode.getValue() : null;
     }
 
     @Override
     public boolean isEmpty() {
-        return top == null;
+        return list.isEmpty();
     }
 
     @Override
     public int size() {
-        return size;
+        return list.getLength();
     }
 
     public void printStack() {
-        Node current = top;
         System.out.print("Stack (top -> bottom): ");
-        while (current != null) {
-            System.out.print(current.data + " ");
-            current = current.next;
-        }
-        System.out.println();
+        list.printList();
     }
 }
